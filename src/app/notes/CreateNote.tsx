@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function CreateNote() {
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -25,6 +26,8 @@ export default function CreateNote() {
     setContent("");
     router.refresh();
   }
+
+//   TODO: Call createNote() when the user clicked enter or a button on the newly created sticky
 
   return (
     <>

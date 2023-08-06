@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className={roboto.className}>
         <div className="flex">
           <Sidebar />
-          <div className="flex-1 p-6 m-6">{children}</div>
+          <div className="flex-1 pt-12 pl-10 m-12">{children}</div>
         </div>
 
       </body>
