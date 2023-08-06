@@ -1,6 +1,6 @@
 import Note from "../components/Note";
-// import axios from "axios";
-import PocketBase from 'pocketbase';
+import PocketBase from "pocketbase";
+import TopBar from "../components/TopBar";
 
 // this route will fetch all the notes from PocketBase
 // and provide a form to create a new note
@@ -9,12 +9,12 @@ import PocketBase from 'pocketbase';
 // with async, await
 
 // to change caching behavior in next 13:
-export const dynamic = 'auto',
-    dynamicParams = true,
-    revalidate = 0,
-    fetchCache = 'auto',
-    runtime = 'nodejs',
-    preferredRegion = 'auto'
+export const dynamic = "auto",
+  dynamicParams = true,
+  revalidate = 0,
+  fetchCache = "auto",
+  runtime = "nodejs",
+  preferredRegion = "auto";
 
 async function getNotes() {
   const pb = new PocketBase("http://127.0.0.1:8090");
@@ -29,9 +29,9 @@ export default async function NotesPage() {
 
   return (
     <>
-      <h1 className="text-3xl pt-3 font-bold pb-10">Notes</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-2">
-        {notes?.map((note) => {
+      <TopBar />
+      <div className="flex flex-wrap gap-4">
+        {notes?.reverse().map((note) => {
           return <Note key={note.id} note={note} />;
         })}
       </div>

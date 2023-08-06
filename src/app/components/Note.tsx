@@ -1,60 +1,52 @@
+"use client";
 import Link from "next/link";
+import SBIcon from "./SBIcon";
+import { BiSolidPencil } from "react-icons/bi";
 
 function formatDateAndTime(inputDate: any) {
   const dateObj = new Date(inputDate);
   const day = String(dateObj.getDate()).padStart(2, "0");
   const month = String(dateObj.getMonth() + 1).padStart(2, "0"); // January is month 0
   const year = dateObj.getFullYear();
-  const hours = String(dateObj.getHours()).padStart(2, "0");
-  const minutes = String(dateObj.getMinutes()).padStart(2, "0");
-
-  return `${day}-${month}-${year} ${hours}:${minutes}`;
+  return formatDate(`${day}-${month}-${year}`);
 }
 
-function getRandomTailwindColor() {
-  const colorShades = [
-    "100",
-    "200",
-    "300",
-    "400",
-    "500",
-    "600",
-    "700",
-    "800",
-    "900",
-  ];
-  const randomColor = Math.floor(Math.random() * colorShades.length);
+function formatDate(inputDate: any) {
+  const [day, month, year] = inputDate.split("-");
+  return `${new Date(year, month - 1, day).toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  })}`;
+}
 
-  const colors = [
-    "bg-red",
-    "bg-blue",
-    "bg-green",
-    "bg-yellow",
-    "bg-pink",
-    "bg-purple",
-    "bg-indigo",
-    "bg-teal",
-    // Add more color classes if needed
-  ];
-  const randomIndex = Math.floor(Math.random() * colors.length);
-
-  return `${colors[randomIndex]}-${colorShades[randomColor]}`;
+async function editNote() {
+  console.log("edit the note");
 }
 
 export default function Note({ note }: any) {
   const { id, title, content, created } = note || {};
 
   return (
-    <Link href={`/notes/${id}`}>
-      <div
-        className={`${getRandomTailwindColor} relative transition-transform hover:-translate-y-2 duration-200 rounded-3xl p-4 shadow-2xl w-80 h-60`}
-      >
+    // transition-transform hover:-translate-y-2 duration-200 for the card, but this kind of distracts
+    // <Link href={`/notes/${id}`}>
+    <div className={`bg-orange-500 bg-opacity-70 relative text-gray-800 rounded-3xl p-4 shadow-xl w-60 h-60`}>
+      <div id="contents">
         <h2 className="font-semibold text-xl pt-4 pb-6">{title}</h2>
         <h5 className="text-base pb-6 font-semibold">{content}</h5>
-        <p className="text-sm absolute bottom-4">
-          {formatDateAndTime(created)}
-        </p>
       </div>
-    </Link>
+      <div id="dateAndEdit" className="bottom-4 flex items-center justify-between">
+        <p className="text-sm">{formatDateAndTime(created)}</p>
+        <div
+          onClick={editNote}
+          className="flex items-center justify-center h-10 w-10 rounded-full bg-black text-white
+          hover:bg-transparent hover:text-black
+          transition-all duration-300 ease-linear cursor-pointer">
+          <BiSolidPencil size="20" />
+        </div>
+      </div>
+    </div>
+    // </Link>
   );
 }
+
