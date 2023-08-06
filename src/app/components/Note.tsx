@@ -1,7 +1,6 @@
 "use client";
-import Link from "next/link";
-import SBIcon from "./SBIcon";
 import { BiSolidPencil } from "react-icons/bi";
+import { motion } from "framer-motion";
 
 function formatDateAndTime(inputDate: any) {
   const dateObj = new Date(inputDate);
@@ -30,23 +29,37 @@ export default function Note({ note }: any) {
   return (
     // transition-transform hover:-translate-y-2 duration-200 for the card, but this kind of distracts
     // <Link href={`/notes/${id}`}>
-    <div className={`bg-orange-500 bg-opacity-70 relative text-gray-800 rounded-3xl p-4 shadow-xl w-60 h-60`}>
+
+    <motion.div
+      initial={{ x: -1000 }}
+      animate={{ x: 0 }}
+      transition={{
+        type: "spring",
+        stiffness: 100,
+        damping: 12,
+        duration: 0.5,
+      }}
+      className={`bg-orange-500 bg-opacity-70 relative text-gray-800 rounded-3xl p-4 shadow-xl w-60 h-60`}
+    >
       <div id="contents">
         <h2 className="font-semibold text-xl pt-4 pb-6">{title}</h2>
         <h5 className="text-base pb-6 font-semibold">{content}</h5>
       </div>
-      <div id="dateAndEdit" className="bottom-4 flex items-center justify-between">
+      <div
+        id="dateAndEdit"
+        className="bottom-4 flex items-center justify-between"
+      >
         <p className="text-sm">{formatDateAndTime(created)}</p>
         <div
           onClick={editNote}
           className="flex items-center justify-center h-10 w-10 rounded-full bg-black text-white
           hover:bg-transparent hover:text-black
-          transition-all duration-300 ease-linear cursor-pointer">
+          transition-all duration-300 ease-linear cursor-pointer"
+        >
           <BiSolidPencil size="20" />
         </div>
       </div>
-    </div>
+    </motion.div>
     // </Link>
   );
 }
-

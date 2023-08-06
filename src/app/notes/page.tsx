@@ -1,6 +1,8 @@
 import Note from "../components/Note";
 import PocketBase from "pocketbase";
 import TopBar from "../components/TopBar";
+import { useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 
 // this route will fetch all the notes from PocketBase
 // and provide a form to create a new note
@@ -30,6 +32,13 @@ export default async function NotesPage() {
   return (
     <>
       <TopBar />
+      {/* <AnimatePresence initial={false}>
+        <div className="flex flex-wrap gap-4">
+          {notes.map((note) => (
+            <Note key={note.id} note={note} />
+          ))}
+        </div>
+      </AnimatePresence> */}
       <div className="flex flex-wrap gap-4">
         {notes?.reverse().map((note) => {
           return <Note key={note.id} note={note} />;
