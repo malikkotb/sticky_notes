@@ -3,7 +3,6 @@
 import PocketBase from "pocketbase";
 import { useRouter } from "next/navigation";
 import { BsPlus } from "react-icons/bs";
-import CreateNote from "../notes/CreateNote";
 
 import { motion } from "framer-motion";
 import { useState } from "react";
@@ -28,40 +27,38 @@ const itemVariants = {
 };
 
 export default function Sidebar() {
-  const [showColors, setShowColors] = useState(false);
 
   function handleChooseColor() {
     // TODO: pass color down as prop to create a new Note
+
   }
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const [title, setTitle] = useState("Title placy");
-  const [content, setContent] = useState("content i guess");
+  const [content, setContent] = useState("This is a sticky.");
 
   const router = useRouter();
 
-  async function createNote() {
+  async function createNote(color: any) {
     console.log("create note");
     const pb = new PocketBase("http://127.0.0.1:8090");
 
     // example create data
     const data = {
-      title: title,
       content: content,
+      color: color,
     };
     await pb.collection("notes").create(data);
 
     // reset title and content
-    setTitle("");
-    setContent("");
+    setContent("This is a sticky.");
     router.refresh();
+    setIsOpen(!isOpen);
   }
 
   return (
     <div className="border-r border-gray-300 top-0 left-0 h-screen w-24 m-0 flex flex-col">
       <p className="text-center pt-4 pb-12 font-extrabold">Sticky</p>
-      <CreateNote />
       <motion.nav initial={false} animate={isOpen ? "open" : "closed"}>
         <motion.button
           whileTap={{
@@ -104,7 +101,7 @@ export default function Sidebar() {
             variants={bouncingVariant}
             initial="initial"
             whileTap="whileTap"
-            onClick={() => createNote()}
+            onClick={() => createNote('bg-yellow-400')}
           >
             <motion.li
               variants={itemVariants}
@@ -115,6 +112,7 @@ export default function Sidebar() {
             variants={bouncingVariant}
             initial="initial"
             whileTap="whileTap"
+            onClick={() => createNote('bg-green-400')}
           >
             <motion.li
               variants={itemVariants}
@@ -125,6 +123,7 @@ export default function Sidebar() {
             variants={bouncingVariant}
             initial="initial"
             whileTap="whileTap"
+            onClick={() => createNote('bg-blue-400')}
           >
             <motion.li
               variants={itemVariants}
@@ -135,6 +134,7 @@ export default function Sidebar() {
             variants={bouncingVariant}
             initial="initial"
             whileTap="whileTap"
+            onClick={() => createNote('bg-orange-400')}
           >
             <motion.li
               variants={itemVariants}
@@ -145,6 +145,7 @@ export default function Sidebar() {
             variants={bouncingVariant}
             initial="initial"
             whileTap="whileTap"
+            onClick={() => createNote('bg-indigo-400')}
           >
             <motion.li
               variants={itemVariants}
